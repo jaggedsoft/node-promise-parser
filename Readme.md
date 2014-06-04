@@ -66,7 +66,7 @@ Call `callback` when any error messages are received
 
 Find elements based on `selector` within the current context
 
-###.follow([attr], [opts])
+###.follow([selector], [opts])
 
 Follow URLs found within the element text or `attr`
 
@@ -142,15 +142,15 @@ For storing data that will be inherited by the next context
 
 ###:contains(string)
 
-Select all elements whose contents contain `string`
+Select elements whose contents contain `string`
 
 ###:starts-with(string)
 
-Select all elements whose contents start with `string`
+Select elements whose contents start with `string`
 
 ###:ends-with(string)
 
-Select all elements whose contents end with `string`
+Select elements whose contents end with `string`
 
 ###:first
 
@@ -176,6 +176,14 @@ Select even elements
 
 Select odd elements
 
+###:skip(n), skip-first(n)
+
+Skip first `n` elements
+
+###:skip-last(n)
+
+Skip last `n` elements
+
 ###:range(n1, n2)
 
 Select `n1` through `n2` elements inclusive
@@ -184,6 +192,9 @@ Select `n1` through `n2` elements inclusive
 
 Select `n`th element (shortcut for `:nth-of-type`)
 
+###@[attr]
+
+Select `attr`
 
 ##Dependencies
 
