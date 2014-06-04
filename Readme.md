@@ -7,7 +7,7 @@ Fast, lightweight web scraper for nodejs
 
 - Fast: uses libxml C bindings
 - Lightweight: no dependencies like jQuery or jsdom
-- Clean: promise based interface. no more nested callbacks.
+- Clean: promise based interface- no more nested callbacks
 - Flexible: supports both CSS and XPath selectors
 
 ##Example
@@ -21,18 +21,12 @@ new pp('craigslist.org')
 .follow('href')
 .find('header + table a')
 .set('category')
-.follow()
-.then(function(next) {
-	// do something
-	next(context);
-})
-.follow('p > a', { next: '.button.next' })
+.follow('href')
+.find('p > a')
+.follow({ next: '.button.next' })
 .set({
 	'title': 'section > h2',
-	'images': {
-		attr: 'src',
-		selector: 'img'
-	}
+	'images[]': 'img @src' 
 })
 .get(function(data) {
 	// do something with data
@@ -49,6 +43,8 @@ new promise-parser(url, [opts])
 
 - opts.concurrency [int]
 - opts.http [object] - HTTP options given to [needle](https://github.com/tomas/needle) instance
+- opts.http.timeout [int] - Timeout in milliseconds
+- opts.http.proxy [string] - Forward requests through HTTP(s) proxy
 - opts.http.concurrency [int] - Number of simultaneous HTTP requests
 
 ##Promises
@@ -78,12 +74,6 @@ Follow URLs found within the element text or `attr`
 
 Find and set values for `context.data`
 
-###.get(callback(data))
-
-Get data stored in `context.data`
-
-####Examples
-
 ```javascript
 
 // set 'title' to current element text
@@ -98,19 +88,21 @@ pp.set({
 	'title':  'a.title',
 	// set 'description' to text of 'p.description'
 	'description': 'p.description',
+	// set 'url' to 'a.permalink' href attribute
 	'url': 'a.permalink @href',
 	// set 'images[]' to the 'src' attribute of each '<img>'
 	'images[]': 'img @src',
 });
 ```
+###.get(callback(data))
+
+Get data stored in `context.data`
 
 ###.then(callback(next))
 
 Calls `callback` from the context of the current element.
 To continue, the callback must call `next([context])` at least once.
 The `context` argument can optionally be a new context.
-
-####Example
 
 
 ```javascript
