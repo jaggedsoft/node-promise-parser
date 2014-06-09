@@ -6,7 +6,7 @@ Fast, lightweight web scraper for nodejs
 ##Features
 
 - Fast: uses libxml C bindings
-- Lightweight: no dependencies like jQuery or jsdom
+- Lightweight: no dependencies like jQuery, cheerio, or jsdom
 - Clean: promise based interface- no more nested callbacks
 - Flexible: supports both CSS and XPath selectors
 
