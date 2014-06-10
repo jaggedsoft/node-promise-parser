@@ -18,12 +18,11 @@ var pp = require('promise-parser');
 pp('www.craigslist.org/about/sites') 
 .find('h1 + div a').set('location').follow('@href')
 .find('header + table a').set('category').follow('@href')
-.find('p > a')
-.follow('@href', { next: '.button.next' })
+.find('p > a').follow('@href', { next: '.button.next' })
 .set({
     'title':        'section > h2',
     'description':  '#postingbody',
-    'subcategory':  'div.breadbox > span + span + span + span',
+    'subcategory':  'div.breadbox > span[4]',
     'time':         'time@datetime',
     'latitude':     '#map@data-latitude',
     'longitude':    '#map@data-longitude',
