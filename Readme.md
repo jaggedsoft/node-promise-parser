@@ -1,7 +1,6 @@
 #promise-parser
 
-
-Fast, lightweight web scraper for nodejs
+Fast, lightweight web scraper for NodeJS.
 
 ##Features
 
@@ -18,10 +17,10 @@ var pp = require('promise-parser');
 new pp('craigslist.org')
 .find('h1 + div a')
 .set('location')
-.follow('href')
+.follow('@href')
 .find('header + table a')
 .set('category')
-.follow('href')
+.follow('@href')
 .find('p > a')
 .follow({ next: '.button.next' })
 .set({
@@ -35,13 +34,14 @@ new pp('craigslist.org')
 
 ##Usage
 
+```npm install promise-parser```
+
 ```javascript
 new promise-parser(url, [opts])
 ```
 
 ###`opts [object]`
 
-- opts.concurrency [int]
 - opts.http [object] - HTTP options given to [needle](https://github.com/tomas/needle) instance
 - opts.http.timeout [int] - Timeout in milliseconds
 - opts.http.proxy [string] - Forward requests through HTTP(s) proxy
