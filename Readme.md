@@ -16,9 +16,14 @@ var pp = require('promise-parser');
 
 // scrape all craigslist listings
 pp('www.craigslist.org/about/sites') 
-.find('h1 + div a').set('location').follow('@href')
-.find('header + table a').set('category').follow('@href')
-.find('p > a').follow('@href', { next: '.button.next' })
+.find('h1 + div a')
+.set('location')
+.follow('@href')
+.find('header + table a')
+.set('category')
+.follow('@href')
+.find('p > a')
+.follow('@href', { next: '.button.next' })
 .set({
     'title':        'section > h2',
     'description':  '#postingbody',
