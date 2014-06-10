@@ -1,6 +1,6 @@
 #promise-parser
 
-Fast, lightweight promise-based HTML/XML parser/web scraper for NodeJS.
+Promise-based HTML/XML parser/web scraper for NodeJS.
 
 ##Features
 
