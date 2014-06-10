@@ -9,6 +9,18 @@ Promise-based HTML/XML parser/web scraper for NodeJS.
 - Clean: promise based interface- no more nested callbacks
 - Flexible: supports both CSS and XPath selectors
 
+##Install
+
+```
+npm install promise-parser
+```
+
+##Usage
+
+```javascript
+new promise-parser([url or xml/html string], [opts])
+```
+
 ##Example
 
 ```javascript
@@ -31,18 +43,6 @@ pp('www.craigslist.org/about/sites')
 .get(function(listing) {
     // do something with listing data
 })
-```
-
-##Install
-
-```
-npm install promise-parser
-```
-
-##Usage
-
-```javascript
-new promise-parser([url or xml/html string], [opts])
 ```
 
 ###`opts [object]`
