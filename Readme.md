@@ -1,6 +1,6 @@
 #promise-parser
 
-Promise-based HTML/XML parser/web scraper for NodeJS.
+Promise-based HTML/XML parser and web scraper for NodeJS.
 
 ##Features
 
@@ -8,12 +8,6 @@ Promise-based HTML/XML parser/web scraper for NodeJS.
 - Lightweight: no dependencies like jQuery, cheerio, or jsdom
 - Clean: promise based interface- no more nested callbacks
 - Flexible: supports both CSS and XPath selectors
-
-##Install
-
-```
-npm install promise-parser
-```
 
 ##Example
 
@@ -38,6 +32,11 @@ pp('www.craigslist.org/about/sites')
     // do something with listing data
 })
 ```
+
+##Install
+
+```
+npm install promise-parser```
 
 ##Usage
 
@@ -135,9 +134,15 @@ Loads `url` and calls `callback` with the new `context` (which will be the root 
 
 #####context.log(msg)
 
+Send log message.
+
 #####context.debug(msg)
 
+Send debug message.
+
 #####context.error(msg)
+
+Send error message.
 
 #####context.data [object]
 
@@ -145,7 +150,7 @@ For storing data that will be inherited by the next context
 
 ##CSS helpers
 
-These CSS helper selectors are provided to simplify complex CSS selectors and to add jQuery-like functionality.
+These CSS helper selectors are provided to simplify complex CSS expressions and to add jQuery-like functionality.
 
 ###:contains(string)
 
@@ -199,7 +204,7 @@ Select `n1` through `n2` elements inclusive
 
 Select `n`th element (shortcut for `:nth-of-type`)
 
-###@[attr]
+###@attr
 
 Select `attr`
 
