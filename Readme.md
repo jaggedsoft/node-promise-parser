@@ -15,12 +15,6 @@ Promise-based HTML/XML parser/web scraper for NodeJS.
 npm install promise-parser
 ```
 
-##Usage
-
-```javascript
-new promise-parser([url or xml/html string], [opts])
-```
-
 ##Example
 
 ```javascript
@@ -43,6 +37,12 @@ pp('www.craigslist.org/about/sites')
 .get(function(listing) {
     // do something with listing data
 })
+```
+
+##Usage
+
+```javascript
+new promise-parser([url or xml/html string], [opts])
 ```
 
 ###`opts [object]`
