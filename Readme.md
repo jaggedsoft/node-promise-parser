@@ -34,7 +34,11 @@ new pp('craigslist.org')
 
 ##Usage
 
-```npm install promise-parser```
+
+####Install
+```
+npm install promise-parser
+```
 
 ```javascript
 new promise-parser([url or xml/html string], [opts])
