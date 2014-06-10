@@ -122,7 +122,7 @@ pp.then(function(next) {
 
 ####`context`
 
-The ```javascript this``` value of `.then` callback function is set to the current context.
+The `this` value of `.then` callback function is set to the current context.
 The context is a [libxmljs `Element`](https://github.com/polotek/libxmljs/wiki/Element) object representing the current HTML element.
 In addition to all of the [libxmljs `Element`](https://github.com/polotek/libxmljs/wiki/Element) functions,
 each `context` also supports these functions:
