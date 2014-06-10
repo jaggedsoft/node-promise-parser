@@ -8,7 +8,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/rc0x03/node-scraper.git"
+        "url": "https://github.com/rc0x03/node-promise-parser.git"
     },
     "author": {
         "name": "rc0x03",
@@ -30,8 +30,8 @@
     },
     "readmeFilename": "Readme.md",
     "bugs": {
-        "url": "https://github.com/rc0x03/node-scraper/issues"
+        "url": "https://github.com/rc0x03/node-promise-parser/issues"
     },
-    "_id": "node-scraper@0.1",
-    "_from": "node-scraper@"
+    "_id": "node-promise-parser@0.1",
+    "_from": "node-promise-parser@"
 }
