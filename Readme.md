@@ -144,6 +144,8 @@ For storing data that will be inherited by the next context
 
 ##CSS helpers
 
+These CSS helper selectors are provided to simplify complex CSS selectors and to add jQuery-like functionality.
+
 ###:contains(string)
 
 Select elements whose contents contain `string`
