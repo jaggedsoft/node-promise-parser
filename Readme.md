@@ -210,9 +210,9 @@ Select `n1` through `n2` elements inclusive
 
 Select `n`th element (shortcut for `:nth-of-type`)
 
-###@attr
+###@attribute
 
-Select `attr`
+Select `attribute`
 
 ##Dependencies
 
