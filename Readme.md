@@ -41,7 +41,8 @@ pp('www.craigslist.org/about/sites')
 ##Install
 
 ```
-npm install promise-parser```
+npm install promise-parser
+```
 
 ##Usage
 
