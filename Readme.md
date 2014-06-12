@@ -154,6 +154,10 @@ Send error message.
 
 For storing data that will be inherited by the next context
 
+###.done(callback)
+
+Calls `callback` when parsing has completely finished
+
 ##CSS helpers
 
 These CSS helper selectors are provided to simplify complex CSS expressions and to add jQuery-like functionality.
