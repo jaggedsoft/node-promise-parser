@@ -117,11 +117,10 @@ The `context` argument can optionally be a new context.
 
 ```javascript
 pp.then(function(next) {
-	currentContext = this;
-	var links = currentContext.find('a');
-	currentContext.log('found '+links.length+' links');
-	links.forEach(function(newContext) {
-		next(newContext);
+	var links = this.find('a');
+	this.log('found '+links.length+' links');
+	links.forEach(function(link) {
+		next(link);
 	});
 })
 ```
@@ -152,71 +151,71 @@ Calls `callback` when parsing has completely finished
 
 Call `callback` when any log messages are received
 
-####.debug(callback(msg))
-
-Call `callback` when any debug messages are received
-
 ####.error(callback(msg))
 
 Call `callback` when any error messages are received
+
+####.debug(callback(msg))
+
+Call `callback` when any debug messages are received
 
 ##CSS helpers
 
 These CSS helper selectors are provided to simplify complex CSS expressions and to add jQuery-like functionality.
 
-###:contains(string)
+####:contains(string)
 
 Select elements whose contents contain `string`
 
-###:starts-with(string)
+####:starts-with(string)
 
 Select elements whose contents start with `string`
 
-###:ends-with(string)
+####:ends-with(string)
 
 Select elements whose contents end with `string`
 
-###:first
+####:first
 
 Select first element  (shortcut for `:first-of-type`)
 
-###:first(n), :limit(n)
+####:first(n), :limit(n)
 
 Select first `n` elements
 
-###:last
+####:last
 
 Select last element (shortcut for `:last-of-type`)
 
-###:last(n)
+####:last(n)
 
 Select last `n` elements
 
-###:even
+####:even
 
 Select even elements
 
-###:odd
+####:odd
 
 Select odd elements
 
-###:skip(n), skip-first(n)
+####:skip(n), skip-first(n)
 
 Skip first `n` elements
 
-###:skip-last(n)
+####:skip-last(n)
 
 Skip last `n` elements
 
-###:range(n1, n2)
+####:range(n1, n2)
 
 Select `n1` through `n2` elements inclusive
 
-###.exampleSelector[n]
+####.exampleSelector[n]
 
 Select `n`th element (shortcut for `:nth-of-type`)
 
-###@attribute
+####@attribute
 
 Select `attribute`
 
