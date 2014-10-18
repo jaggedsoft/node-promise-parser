@@ -50,7 +50,7 @@ npm install promise-parser
 ##Usage
 
 ```javascript
-new promise-parser([url or xml/html string], [opts])
+new promise-parser([opts])
 ```
 
 ###`opts [object]`
@@ -61,6 +61,30 @@ new promise-parser([url or xml/html string], [opts])
 - opts.http.concurrency [int] - Number of simultaneous HTTP requests
 
 ##Promises
+
+###.parse(string)
+
+Parse an HTML or XML string
+
+###.get(url, [data], [opts])
+
+HTTP GET request
+
+###.post(url, [data], [opts])
+
+HTTP POST request
+
+###.find(selector, [opts])
+
+Find elements based on `selector` within the current context
+
+###.follow([selector], [opts])
+
+Follow URLs found within the element text or `attr`
+
+###.set([args])
+
+Find and set values for `context.data`
 
 ###.log(callback(msg))
 
@@ -75,17 +99,6 @@ Call `callback` when any debug messages are received
 
 Call `callback` when any error messages are received
 
-###.find(selector, [opts])
-
-Find elements based on `selector` within the current context
-
-###.follow([selector], [opts])
-
-Follow URLs found within the element text or `attr`
-
-###.set([args])
-
-Find and set values for `context.data`
 
 ```javascript
 
