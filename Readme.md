@@ -36,7 +36,7 @@ parser
     'longitude':    '#map@data-longitude',
     'images[]':     'img@src'
 })
-.get(function(listing) {
+.data(function(listing) {
     // do something with listing data
 })
 ```
@@ -88,7 +88,6 @@ Follow URLs found within the element text or `attr`
 Find and set values for `context.data`
 
 ```javascript
-
 // set 'title' to current element text
 pp.set('title')
 
@@ -114,19 +113,6 @@ Calls `callback` from the context of the current element.
 To continue, the callback must call `next([context])` at least once.
 The `context` argument can optionally be a new context.
 
-
-```javascript
-pp.then(function(next) {
-	var links = this.find('a');
-	this.log('found '+links.length+' links');
-	links.forEach(function(link) {
-		next(link);
-	});
-})
-```
-
-#####`context`
-
 The `this` value of `.then` callback function is set to the current context.
 The context is a [libxmljs `Element`](https://github.com/polotek/libxmljs/wiki/Element) object representing the current HTML/XML element.
 In addition to all of the libxmljs `Element` functions,
@@ -138,6 +124,16 @@ each `context` also supports these functions:
 * context.debug(msg)
 * context.error(msg)
 * context.data [object]
+
+```javascript
+pp.then(function(next) {
+	var links = this.find('a');
+	this.log('found '+links.length+' links');
+	links.forEach(function(link) {
+		next(link);
+	});
+})
+```
 
 ####.data(callback(data))
 
