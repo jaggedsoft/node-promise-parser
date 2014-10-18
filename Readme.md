@@ -136,14 +136,12 @@ The context is a [libxmljs `Element`](https://github.com/polotek/libxmljs/wiki/E
 In addition to all of the libxmljs `Element` functions,
 each `context` also supports these functions:
 
-#####context.request(url, [data], callback(context))
-####context.post(url, [data], callback(context))
-#####context.log(msg)
-#####context.debug(msg)
-#####context.error(msg)
-#####context.data [object]
-
-For storing data that will be inherited by the next context
+* context.request(url, [data], callback(context))
+* context.post(url, [data], callback(context))
+* context.log(msg)
+* context.debug(msg)
+* context.error(msg)
+* context.data [object]
 
 ###.done(callback)
 
