@@ -129,30 +129,18 @@ pp.then(function(next) {
 })
 ```
 
-####`context`
+#####`context`
 
 The `this` value of `.then` callback function is set to the current context.
-The context is a [libxmljs `Element`](https://github.com/polotek/libxmljs/wiki/Element) object representing the current HTML element.
-In addition to all of the [libxmljs `Element`](https://github.com/polotek/libxmljs/wiki/Element) functions,
+The context is a [libxmljs `Element`](https://github.com/polotek/libxmljs/wiki/Element) object representing the current HTML/XML element.
+In addition to all of the libxmljs `Element` functions,
 each `context` also supports these functions:
 
-#####context.request(url, [opts], callback(context))
-
-Loads `url` and calls `callback` with the new `context` (which will be the root element of the loaded document).
-
-
+#####context.request(url, [data], callback(context))
+####context.post(url, [data], callback(context))
 #####context.log(msg)
-
-Send log message.
-
 #####context.debug(msg)
-
-Send debug message.
-
 #####context.error(msg)
-
-Send error message.
-
 #####context.data [object]
 
 For storing data that will be inherited by the next context
