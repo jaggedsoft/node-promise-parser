@@ -86,20 +86,6 @@ Follow URLs found within the element text or `attr`
 
 Find and set values for `context.data`
 
-###.log(callback(msg))
-
-Call `callback` when any log messages are received
-
-###.debug(callback(msg))
-
-Call `callback` when any debug messages are received
-
-
-###.error(callback(msg))
-
-Call `callback` when any error messages are received
-
-
 ```javascript
 
 // set 'title' to current element text
@@ -120,7 +106,8 @@ pp.set({
 	'images[]': 'img @src',
 });
 ```
-###.get(callback(data))
+
+###.data(callback(data))
 
 Get data stored in `context.data`
 
@@ -173,6 +160,18 @@ For storing data that will be inherited by the next context
 ###.done(callback)
 
 Calls `callback` when parsing has completely finished
+
+###.log(callback(msg))
+
+Call `callback` when any log messages are received
+
+###.debug(callback(msg))
+
+Call `callback` when any debug messages are received
+
+###.error(callback(msg))
+
+Call `callback` when any error messages are received
 
 ##CSS helpers
 
