@@ -2,7 +2,7 @@ var URL         = require('url');
 var needle	= require('/usr/lib/node_modules/needle');
 var libxml	= require('libxmljs');
 var util        = require('util');
-var css2xpath       = require('./lib/css2xpath.js');
+var css2xpath   = require('./lib/css2xpath.js');
 
 libxml.Document.prototype.findXPath = libxml.Document.prototype.find;
 libxml.Element.prototype.findXPath = libxml.Element.prototype.find;
@@ -55,6 +55,13 @@ var Parser = function(opts) {
     return;
 }
 
+Parser.prototype.parse = function(data) {
+    if (data.substr(0,2) === '<?')
+        return libxml.parseXml(data);
+    else
+        return libxml.parseHtml(data);
+}
+
 Parser.prototype.get = function(depth, url, data, cb) {
     if (cb === undefined)
         cb = data;
@@ -101,14 +108,11 @@ Parser.prototype.requestQueue = function() {
                 document.data = { url: url };
                 cb(null, document);
             }catch(err) {
-                //console.log(err);
-                //console.log('Stack: '+err.stack);
                 if (tries < self.opts.http.tries) {
                     self.queue[self.queue.length-1].push([tries, method, url, data, cb])
                 }
                 cb('Error: ['+method+'] '+url+' tries: '+tries+' - '+err.stack, null);
             }
-            //console.log(self.queue);
             self.requestQueue();
             self.resources();
         });
