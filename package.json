@@ -1,10 +1,14 @@
 {
     "name": "promise-parser",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "description": "Web scraper",
     "keywords": [
         "web",
-        "scraper"
+        "scraper",
+	"crawler",
+	"html",
+	"xml",
+	"parser"
     ],
     "repository": {
         "type": "git",

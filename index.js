@@ -1,23 +1,23 @@
+var URL         = require('url');
 var needle	= require('/usr/lib/node_modules/needle');
 var libxml	= require('libxmljs');
-var events	= require('./lib/events.js');
 var util        = require('util');
-
 var css2xpath       = require('./lib/css2xpath.js');
-libxml.Element.prototype.findCSS = function(sel) {
+
+libxml.Document.prototype.findXPath = libxml.Document.prototype.find;
+libxml.Element.prototype.findXPath = libxml.Element.prototype.find;
+
+libxml.Document.prototype.find,
+libxml.Element.prototype.find = function(sel, from_root) {
     if (sel.charAt(0) !== '/') {
         sel = sel.replace('@', '/@')
-        sel = css2xpath(sel);
+        sel = css2xpath('//'+sel);
+        if (!from_root)
+            sel = this.path()+sel;
     }
-    return this.find(sel);
+    return this.findXPath(sel)||[];
 }
-libxml.Document.prototype.findCSS = function(sel) {
-    if (sel.charAt(0) !== '/') {
-        sel = sel.replace('@', '/@')
-        sel = css2xpath(sel);
-    }
-    return this.find(sel);
-}
+
 
 libxml.Element.prototype.content = function() {
     if (this.text !== undefined)
@@ -29,57 +29,114 @@ libxml.Element.prototype.content = function() {
 
 var default_opts = {
     http: {
-        decode: false,
+        decode: true,
         follow: true,
         compressed: true,
         timeout: 30 * 1000,
         user_agent: 'Mozilla/5.0 (Windows NT x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-        concurrency: 10,
+        concurrency: 5,
+        tries: 3
     }
 }
 
-var parser = function(url, opts) {
-    this.base_url = url;
+needle.defaults(default_opts.http);
+
+var Parser = function(opts) {
+    opts = opts||{};
+    this.lastStack = 0;
+    this.stack = 0;
     this.opts = extend(opts, default_opts, false);
     this.opts.http = extend(opts.http, default_opts.http, false);
+    this.requestCount = 0;
     this.requests = 0;
-    this.queue = [];
-    
+    this.queue = {
+        length:0,
+    };
+    return;
+}
+
+Parser.prototype.get = function(depth, url, data, cb) {
+    if (cb === undefined)
+        cb = data;
+    this.request(depth, 'get', url, data, cb);
+}
+
+Parser.prototype.post = function(depth, url, data, cb) {
+    if (cb === undefined)
+        cb = data;
+    this.request(depth, 'post', url, data, cb);
+}
+
+Parser.prototype.request = function(depth, method, url, data, cb) {
+    this.stack++;
+    this.queue[depth||0].push([0, method, url, data, cb]);
     this.requestQueue();
-    return this.request(this.base_url);
 }
 
-parser.prototype.request = function(url, opts) {
+Parser.prototype.requestQueue = function() {
     var self = this;
-    var e = new events();
-    e.parser = this;
-    self.queue.push([url, e]);
-    return e;
-}
-
-parser.prototype.requestQueue = function() {
-    var self = this;
-    if (this.queue.length > 0 && this.requests < this.opts.http.concurrency) {
-        var arr = this.queue.pop();
+    if (this.requests < this.opts.http.concurrency) {
+        var arr = this.nextQueue();
+        if (arr === false)
+            return;
+        var tries = arr.shift()+1;
+        var method = arr.shift();
         var url = arr.shift();
-        var e = arr.shift();
+        //if (this.queue.length > 0)
+        //    url = URL.resolve(this.queue[this.queue.length-1], url);
+        var data = arr.shift();
+        var cb = arr.shift();
         self.requests++;
-        needle.get(url, self.opts.http, function(err, res, data) {
-            e.logging.log('loaded '+url);
-            self.requests--;
+        self.requestCount++;
+        needle.request(method, url, data, function(err, res, data) {
             try {
-                var new_context = libxml.parseHtml(data);
-                new_context.data = { url: url };
-                e.done(new_context);
+                if (err !== null)
+                    throw(err);
+                self.requests--;
+                var document = null;
+                if (res.headers['content-type'].indexOf('xml') !== -1)
+                    document = libxml.parseXml(data);
+                else
+                    document = libxml.parseHtml(data);
+                document.data = { url: url };
+                cb(null, document);
             }catch(err) {
-                console.log(err.stack);
-                e.logging.error(err.stack)
+                //console.log(err);
+                //console.log('Stack: '+err.stack);
+                if (tries < self.opts.http.tries) {
+                    self.queue[self.queue.length-1].push([tries, method, url, data, cb])
+                }
+                cb('Error: ['+method+'] '+url+' tries: '+tries+' - '+err.stack, null);
             }
+            //console.log(self.queue);
+            self.requestQueue();
+            self.resources();
         });
-        this.requestQueue.bind(this)();
-    }else{
-        setTimeout(this.requestQueue.bind(this), 50);
     }
+}
+
+Parser.prototype.nextQueue = function() {
+    for (var i = this.queue.length;i--;) {
+        if (this.queue[i].length !== 0) {
+            return this.queue[i].pop();
+        }
+    }
+    return false;
+}
+
+Parser.prototype.parse = function(data, opts) {
+    return libxml.parseHtml(data)
+}
+
+Parser.prototype.resources = function() {
+    if (Math.abs(this.lastStack-this.stack) < 15) return;
+    var mem = process.memoryUsage();
+    this.p.debug('(process) stack: '+this.stack+', RAM: '+toMB(mem.rss)+', requests: '+this.requestCount+', heap: '+toMB(mem.heapUsed)+' / '+toMB(mem.heapTotal));
+    this.lastStack = this.stack;
+}
+
+function toMB(size) {
+    return (size/1024/1024).toFixed(2)+'Mb';
 }
 
 function extend(obj1, obj2, replace) {
@@ -90,4 +147,9 @@ function extend(obj1, obj2, replace) {
     return obj1;
 }
 
-module.exports = parser;
+module.exports = function(opts) {
+    var parser = new Parser(opts);
+    var Promise = require('./lib/promise.js')(parser);
+    parser.p = new Promise();
+    return parser.p;
+}

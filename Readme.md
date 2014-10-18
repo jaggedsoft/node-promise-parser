@@ -14,8 +14,11 @@ Promise-based HTML/XML parser and web scraper for NodeJS.
 ```javascript
 var pp = require('promise-parser');
 
+var parser = new pp();
+
 // scrape all craigslist listings
-pp('www.craigslist.org/about/sites') 
+parser
+.get('www.craigslist.org/about/sites') 
 .find('h1 + div a')
 .set('location')
 .follow('@href')
