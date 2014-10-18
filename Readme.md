@@ -53,7 +53,7 @@ npm install promise-parser
 new promise-parser([opts])
 ```
 
-####`opts [object]`
+####Options
 
 - opts.http [object] - HTTP options given to [needle](https://github.com/tomas/needle) instance
 - opts.http.timeout [int] - Timeout in milliseconds
