@@ -59,30 +59,31 @@ new promise-parser([opts])
 - opts.http.timeout [int] - Timeout in milliseconds
 - opts.http.proxy [string] - Forward requests through HTTP(s) proxy
 - opts.http.concurrency [int] - Number of simultaneous HTTP requests
+- opts.http.tries [int] - Number of tries before giving up on a request
 
 ##Promises
 
-###.parse(string)
+####.parse(string)
 
 Parse an HTML or XML string
 
-###.get(url, [data], [opts])
+####.get(url, [data], [opts])
 
 HTTP GET request
 
-###.post(url, [data], [opts])
+####.post(url, [data], [opts])
 
 HTTP POST request
 
-###.find(selector, [opts])
+####.find(selector, [opts])
 
 Find elements based on `selector` within the current context
 
-###.follow([selector], [opts])
+####.follow([selector], [opts])
 
 Follow URLs found within the element text or `attr`
 
-###.set([args])
+####.set([args])
 
 Find and set values for `context.data`
 
@@ -107,11 +108,7 @@ pp.set({
 });
 ```
 
-###.data(callback(data))
-
-Get data stored in `context.data`
-
-###.then(callback(next))
+####.then(callback(next))
 
 Calls `callback` from the context of the current element.
 To continue, the callback must call `next([context])` at least once.
@@ -143,19 +140,23 @@ each `context` also supports these functions:
 * context.error(msg)
 * context.data [object]
 
-###.done(callback)
+####.data(callback(data))
+
+Get data stored in `context.data`
+
+####.done(callback)
 
 Calls `callback` when parsing has completely finished
 
-###.log(callback(msg))
+####.log(callback(msg))
 
 Call `callback` when any log messages are received
 
-###.debug(callback(msg))
+####.debug(callback(msg))
 
 Call `callback` when any debug messages are received
 
-###.error(callback(msg))
+####.error(callback(msg))
 
 Call `callback` when any error messages are received
 
